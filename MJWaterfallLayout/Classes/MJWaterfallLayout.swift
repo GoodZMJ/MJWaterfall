@@ -8,9 +8,27 @@
 
 import UIKit
 
+//MARK: - 数据源
+protocol MJWaterfallLayoutDataSource : class{
+    
+    func highForCell(_ layout: UICollectionViewFlowLayout , itemIndex: Int) -> CGFloat
+    
+    
+    
+    
+    
+    
+}
+
 class MJWaterfallLayout: UICollectionViewFlowLayout {
 
     var itemMaxH : CGFloat = 0
+    
+    //每一排的个数
+    var LineNum : Int = 3
+    
+    //数据源
+    weak var dataSource : MJWaterfallLayoutDataSource?
     
     fileprivate lazy var attributes : [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
     
@@ -24,6 +42,10 @@ extension MJWaterfallLayout{
 
     override func prepare() {
         
+        super.prepare()
+        
+        attributes.removeAll()
+        
         //拿到所有的cell
         
         //1.拿到cell的个数
@@ -34,9 +56,7 @@ extension MJWaterfallLayout{
         let count = collectionView.numberOfItems(inSection: 0)
         
         //2.给每一个cell设置一个Attributes(相当于frame)
-        
-        //每排的个数
-        let LineNum = 2
+
         
         //item的宽度
         let itemW = (collectionView.bounds.width - sectionInset.left - sectionInset.right - (CGFloat(LineNum) - 1) * minimumInteritemSpacing) / CGFloat(LineNum)
@@ -60,23 +80,23 @@ extension MJWaterfallLayout{
             //3.给Attributes设置frame
             
             //3.1 随机的高度
-            let itemH = CGFloat(arc4random_uniform(200) + 30)
+            let itemH = dataSource?.highForCell(self, itemIndex: i) ?? 100
             
             let itemX = sectionInset.left + (minimumInteritemSpacing + itemW) * CGFloat(minHighIndex)
             
-            let itemY = minHigh + minimumLineSpacing
+            let itemY = minHigh
             
             attribute.frame = CGRect(x: itemX, y: itemY, width: itemW, height: itemH)
             
             attributes.append(attribute)
             
             //添加高度后更新对应的高度缓存值
-            heights[minHighIndex] = attribute.frame.maxY
+            heights[minHighIndex] = attribute.frame.maxY + minimumLineSpacing
             
         }
         
         //获取最大的高度
-        itemMaxH = heights.max()!
+        itemMaxH = heights.max()! - minimumLineSpacing
         
     }
 
@@ -100,7 +120,7 @@ extension MJWaterfallLayout{
     
     override var collectionViewContentSize: CGSize{
     
-        return CGSize(width: 0, height: itemMaxH)
+        return CGSize(width: 0, height: itemMaxH + sectionInset.bottom)
     
     }
     
