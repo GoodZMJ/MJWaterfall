@@ -1,0 +1,16 @@
+PODS:
+  - MJWaterfallLayout (0.1.0)
+
+DEPENDENCIES:
+  - MJWaterfallLayout (from `../`)
+
+EXTERNAL SOURCES:
+  MJWaterfallLayout:
+    :path: ../
+
+SPEC CHECKSUMS:
+  MJWaterfallLayout: 45ad3c667b175ba72abc8f6e5c0337a6e4fe8966
+
+PODFILE CHECKSUM: 47304cd4979529625d7fd81d97e157dc7a6ee750
+
+COCOAPODS: 1.2.1

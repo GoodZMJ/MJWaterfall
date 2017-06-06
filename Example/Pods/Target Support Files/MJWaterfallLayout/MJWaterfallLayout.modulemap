@@ -1,0 +1,6 @@
+framework module MJWaterfallLayout {
+  umbrella header "MJWaterfallLayout-umbrella.h"
+
+  export *
+  module * { export * }
+}

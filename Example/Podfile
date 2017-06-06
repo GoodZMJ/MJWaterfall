@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'MJWaterfallLayout_Example' do
+  pod 'MJWaterfallLayout', :path => '../'
+
+  target 'MJWaterfallLayout_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

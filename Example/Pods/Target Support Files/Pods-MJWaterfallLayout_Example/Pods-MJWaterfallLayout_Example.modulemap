@@ -1,0 +1,6 @@
+framework module Pods_MJWaterfallLayout_Example {
+  umbrella header "Pods-MJWaterfallLayout_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
